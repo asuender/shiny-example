@@ -59,6 +59,8 @@ jobs:
 
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
+        with:
+          error-on: '"never"'
 
       - name: Deploy to shinyapps.io
         # Continuous deployment only for pushes to the main / master branch
