@@ -4,8 +4,8 @@
 # Triggered on push and pull request events
 on: [push, pull_request]
 
-# Name of the workflow => usethis::use_github_actions_badge("CI-CD")
-name: CI-CD
+# Name of the workflow => usethis::use_github_actions_badge("CI-CD-renv")
+name: CI-CD-renv
 
 jobs:
   CI-CD:
@@ -38,10 +38,22 @@ jobs:
           # Enable RStudio Package Manager to speed up package installation
           use-public-rspm: true
 
-      - name: Install and cache dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck
+      - name: Install system dependencies
+        # This is not taken care of (yet) by r-lib/actions/setup-renv
+        # Package distro used to get the distro for the used ubuntu-latest
+        run: |
+          Rscript -e "install.packages(c('remotes', 'distro'))"
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'writeLines(with(distro::distro(), remotes::system_requirements(id, short_version)))')
+
+      - name: Activate renv and restore packages with cache
+        uses: r-lib/actions/setup-renv@v2
+
+      - name: Install R CMD check
+        run: install.packages("rcmdcheck")
+        shell: Rscript {0}
 
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
