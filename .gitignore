@@ -39,4 +39,5 @@ vignettes/*.pdf
 .Renviron
 
 # R environment
-renv/
+renv/library/
+renv/sandbox/
