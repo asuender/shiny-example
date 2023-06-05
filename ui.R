@@ -4,7 +4,7 @@ library(bslib)
 ui <- fluidPage(
   theme = bs_theme(version = 4, bootswatch = "minty"),
   
-  titlePanel("Just a simple shiny app"),
+  titlePanel("This is my shiny app"),
   
   sidebarLayout(
     sidebarPanel(
