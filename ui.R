@@ -4,7 +4,7 @@ library(bslib)
 ui <- fluidPage(
   theme = bs_theme(version = 4, bootswatch = "minty"),
   
-  titlePanel("This is a placeholder title"),
+  titlePanel("This is my new title"),
   
   sidebarLayout(
     sidebarPanel(
